@@ -1,0 +1,96 @@
+{% extends "vehicletracker/base.html" %}
+
+{% block title %}Vehicles | Vehicle Tracker{% endblock %}
+
+{% block content %}
+<h1>Vehicles</h1>
+
+<form method="get"
+      action="{% url 'vehicletracker:vehicle_list' %}"
+      class="filters">
+
+    <div>
+        <label for="manufacturer">Manufacturer</label>
+        <select name="manufacturer" id="manufacturer">
+            <option value="">All manufacturers</option>
+
+            {% for manufacturer in manufacturers %}
+                <option value="{{ manufacturer.pk }}"
+                    {% if selected_manufacturer == manufacturer.pk|stringformat:"s" %}selected{% endif %}>
+                    {{ manufacturer.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label for="model">Model</label>
+        <select name="model" id="model">
+            <option value="">All models</option>
+
+            {% for model in models %}
+                <option value="{{ model.pk }}"
+                    {% if selected_model == model.pk|stringformat:"s" %}selected{% endif %}>
+                    {{ model }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label for="year">Year</label>
+        <input type="number"
+               name="year"
+               id="year"
+               min="1886"
+               step="1"
+               value="{{ selected_year }}"
+               placeholder="Any year">
+    </div>
+
+    <button type="submit">Filter</button>
+    <a href="{% url 'vehicletracker:vehicle_list' %}">Clear filters</a>
+</form>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Manufacturer</th>
+                <th scope="col">Model</th>
+                <th scope="col">Year</th>
+                <th scope="col">Submodel / trim</th>
+                <th scope="col">Engine</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for vehicle in vehicles %}
+                <tr>
+                    <td>{{ vehicle.vehicle_model.manufacturer.name }}</td>
+                    <td>{{ vehicle.vehicle_model.name }}</td>
+                    <td>{{ vehicle.year }}</td>
+                    <td>{{ vehicle.submodel|default:"—" }}</td>
+                    <td>
+                        {% if vehicle.engine_size_litres != None %}
+                            {{ vehicle.engine_size_litres }} L
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+                    <td>{{ vehicle.description|default:"—"|linebreaksbr }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6">
+                        No vehicles found. Clear the filters or
+                        <a href="{% url 'vehicletracker:vehicle_create' %}">
+                            add a vehicle</a>.
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

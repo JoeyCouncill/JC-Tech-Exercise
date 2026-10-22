@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Vehicle Tracker{% endblock %}</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #f4f6f8;
+            color: #222;
+            font-family: Arial, sans-serif;
+        }
+
+        nav {
+            background: #193454;
+            padding: 20px;
+        }
+
+        nav a {
+            color: white;
+            margin-right: 20px;
+            text-decoration: none;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: end;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            box-sizing: border-box;
+            padding: 10px;
+            max-width: 100%;
+            font: inherit;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field input, .field select, .field textarea {
+            width: 100%;
+        }
+
+        button {
+            padding: 11px 18px;
+            background: #193454;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #eef2f6;
+        }
+
+        .errorlist {
+            color: #b00020;
+        }
+
+        .help {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'vehicletracker:vehicle_list' %}">Vehicles</a>
+        <a href="{% url 'vehicletracker:vehicle_create' %}">Add vehicle</a>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

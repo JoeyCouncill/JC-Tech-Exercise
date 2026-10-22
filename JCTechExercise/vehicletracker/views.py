@@ -3,7 +3,7 @@ from .models import Manufacturer, Vehicle, VehicleModel
 from .forms import VehicleForm
 
 
-def Vehicle_list(request):
+def vehicle_list(request):
     vehicles = Vehicle.objects.select_related(
         "vehicle_model__manufacturer"
     )
