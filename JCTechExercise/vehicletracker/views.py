@@ -39,6 +39,10 @@ def vehicle_create(request):
 
     if request.method == "POST" and form.is_valid():
         form.save()
-        return redirect("vehicle_list")
+        return redirect("vehicletracker:vehicle_list")
 
-    return redirect("vehicletracker:vehicle_list")
+    return render(
+        request,
+        "vehicletracker/vehicle_form.html",
+        {"form": form},
+    )
